@@ -1,17 +1,37 @@
 import React, { Component } from 'react'
+import * as BooksAPI from '../BooksAPI'
 
 class Book extends Component{
     state = {
+      bookShelf: 'none',
+    }
+    handleChange = (e, bookID) => {
+      const selectedShelf = e.target.value;
+      
+      this.setState({bookShelf: selectedShelf});
+      if(selectedShelf === 'currentlyReading'){
+        BooksAPI.update({id: bookID}, 'currentlyReading')
+          .then((data) => {console.log(data)});
+      }else if (selectedShelf === 'wantToRead'){
+        BooksAPI.update({id: bookID}, 'wantToRead')
+        .then((data) => {console.log(data)});
+      }else if(selectedShelf === 'read'){
+        BooksAPI.update({id: bookID}, 'read')
+        .then((data) => {console.log(data)});
+      }else{
+        BooksAPI.update({id: bookID}, '')
+        .then((data) => {console.log(data)});
+      }
     }
     render(){
-        const { authors, title, backgroundImage} = this.props;
+        const { bookID, authors, title, backgroundImage } = this.props;
         return(
           <li>
             <div className="book">
               <div className="book-top">
                 <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${backgroundImage})`}}></div>
                 <div className="book-shelf-changer">
-                  <select>
+                  <select value={this.state.bookShelf} onChange={(e) => {this.handleChange(e, bookID)}}>
                     <option value="move" disabled>Move to...</option>
                     <option value="currentlyReading">Currently Reading</option>
                     <option value="wantToRead">Want to Read</option>

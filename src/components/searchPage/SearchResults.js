@@ -8,7 +8,7 @@ class SearchResults extends Component{
               <ol className="books-grid">
                 {
                   books.map((book) => (
-                    <Book key={book.id} title={book.title} authors={book.authors} backgroundImage={book.imageLinks.smallThumbnail}/>
+                    <Book key={book.id} bookID={book.id} title={book.title} authors={book.authors} backgroundImage={book.imageLinks.smallThumbnail}/>
                   ))
                 }
               </ol>
