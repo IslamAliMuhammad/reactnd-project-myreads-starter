@@ -7,11 +7,12 @@ import ListShelves from './components/mainPage/ListShelves'
 
 class BooksApp extends React.Component {
   state = {
-    
+    books: []
   }
   
   componentDidMount(){
-   
+    BooksAPI.getAll()
+      .then((books) => {this.setState({books: books});});
   }
   render() {
     return (
@@ -21,7 +22,7 @@ class BooksApp extends React.Component {
         )}/>
         
         <Route exact path='/' render={() => (
-          <ListShelves />
+          <ListShelves books={this.state.books}/>
         )}/>
   
       </div>

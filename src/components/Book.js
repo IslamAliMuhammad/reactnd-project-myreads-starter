@@ -24,30 +24,30 @@ class Book extends Component{
       }
     }
     render(){
-        const { bookID, authors, title, backgroundImage } = this.props;
+        const { book } = this.props;
+        const { id, authors, title, imageLinks } = book;
+
         return(
-          <li>
-            <div className="book">
-              <div className="book-top">
-                <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${backgroundImage})`}}></div>
-                <div className="book-shelf-changer">
-                  <select value={this.state.bookShelf} onChange={(e) => {this.handleChange(e, bookID)}}>
-                    <option value="move" disabled>Move to...</option>
-                    <option value="currentlyReading">Currently Reading</option>
-                    <option value="wantToRead">Want to Read</option>
-                    <option value="read">Read</option>
-                    <option value="none">None</option>
-                  </select>
-                </div>
-              </div>
-              <div className="book-title">{title}</div>
-              <div className="book-authors">
-                <ul className="book-authors-list">
-                  {authors && authors.map((author) => (<li key={author}>{author}</li>))}
-                </ul>
+          <div className="book">
+            <div className="book-top">
+              <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${imageLinks.smallThumbnail})`}}></div>
+              <div className="book-shelf-changer">
+                <select value={this.state.bookShelf} onChange={(e) => {this.handleChange(e, id)}}>
+                  <option value="move" disabled>Move to...</option>
+                  <option value="currentlyReading">Currently Reading</option>
+                  <option value="wantToRead">Want to Read</option>
+                  <option value="read">Read</option>
+                  <option value="none">None</option>
+                </select>
               </div>
             </div>
-          </li>
+            <div className="book-title">{title}</div>
+            <div className="book-authors">
+              <ul className="book-authors-list">
+                {authors && authors.map((author) => (<li key={author}>{author}</li>))}
+              </ul>
+            </div>
+          </div>
         );
     }
 }
