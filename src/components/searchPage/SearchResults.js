@@ -8,7 +8,9 @@ class SearchResults extends Component{
               <ol className="books-grid">
                 {
                   books.map((book) => (
-                    <Book book={book}/>
+                    <li key={book.id}>
+                      <Book book={book} onUpdateRemoteShelf={this.props.onUpdateRemoteShelf}/>
+                    </li>
                   ))
                 }
               </ol>

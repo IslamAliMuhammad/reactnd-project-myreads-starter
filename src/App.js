@@ -7,22 +7,28 @@ import ListShelves from './components/mainPage/ListShelves'
 
 class BooksApp extends React.Component {
   state = {
-    books: []
+    booksIDS: {} 
   }
   
-  componentDidMount(){
-    BooksAPI.getAll()
-      .then((books) => {this.setState({books: books});});
+
+  updateRemoteShelf = (bookID, shelf) => {
+    if(shelf === 'currentlyReading'){
+      return BooksAPI.update({id: bookID}, 'currentlyReading');
+    }else if (shelf === 'wantToRead'){
+      return BooksAPI.update({id: bookID}, 'wantToRead');
+    }else if(shelf === 'read'){
+      return BooksAPI.update({id: bookID}, 'read');
+    }
   }
   render() {
     return (
       <div className="app">
         <Route path='/search' render={() => (
-          <Search />
+          <Search onUpdateRemoteShelf={this.updateRemoteShelf}/>
         )}/>
         
         <Route exact path='/' render={() => (
-          <ListShelves books={this.state.books}/>
+          <ListShelves books={this.state.books} onUpdateRemoteShelf={this.updateRemoteShelf}/>
         )}/>
   
       </div>

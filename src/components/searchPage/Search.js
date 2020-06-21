@@ -13,8 +13,8 @@ class Search extends Component{
     searchBook = (query) => {
       BooksAPI.search(query)
         .then((books) => {
-          this.setState(() => ({books: books}));
-          console.log(this.state.books)
+          books.error ? this.setState(() => ({books: []})) : this.setState(() => ({books: books}));
+          console.log('Search results books', this.state.books)
         });
     }
     handleChange = (e) => {
@@ -23,6 +23,7 @@ class Search extends Component{
         this.searchBook(e.target.value);
       }else{
         // clear all books
+        this.setState({books: []});
       }
     }
  
@@ -44,7 +45,7 @@ class Search extends Component{
   
               </div>
             </div>
-            {this.state.books.length > 0 && <SearchResults books={this.state.books}/>}
+            <SearchResults books={this.state.books} onUpdateRemoteShelf={this.props.onUpdateRemoteShelf}/>
           </div>
         );
     }
