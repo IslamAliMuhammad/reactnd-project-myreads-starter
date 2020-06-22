@@ -28,7 +28,6 @@ class BooksApp extends React.Component {
       .then((booksIDS) => {this.setState({booksIDsShelved: booksIDS});});
   }
   render() {
-    console.log(this.state.booksIDsShelved);
     return (
       <div className="app">
         <Route path='/search' render={() => (

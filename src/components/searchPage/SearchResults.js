@@ -13,8 +13,6 @@ class SearchResults extends Component{
     }
     render(){
         const { books, booksIDsShelved } = this.props;
-
-        console.log(booksIDsShelved);
         return(
             <div className="search-books-results">
               <ol className="books-grid">
