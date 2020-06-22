@@ -7,24 +7,32 @@ import ListShelves from './components/mainPage/ListShelves'
 
 class BooksApp extends React.Component {
   state = {
-    booksIDS: {} 
+    booksIDsShelved: {} 
   }
   
-
-  updateRemoteShelf = (bookID, shelf) => {
+  updateRemoteShelf = async (bookID, shelf, callback) => {
     if(shelf === 'currentlyReading'){
-      return BooksAPI.update({id: bookID}, 'currentlyReading');
+      BooksAPI.update({id: bookID}, 'currentlyReading')
+      .then((booksIDS) => {this.setState({booksIDsShelved: booksIDS}, callback);});
     }else if (shelf === 'wantToRead'){
-      return BooksAPI.update({id: bookID}, 'wantToRead');
+      BooksAPI.update({id: bookID}, 'wantToRead')
+      .then((booksIDS) => {this.setState({booksIDsShelved: booksIDS}, callback);});
     }else if(shelf === 'read'){
-      return BooksAPI.update({id: bookID}, 'read');
+      BooksAPI.update({id: bookID}, 'read')
+      .then((booksIDS) => {this.setState({booksIDsShelved: booksIDS}, callback);});
     }
   }
+
+  componentDidMount(){
+    BooksAPI.update({}, 'currentlyReading')
+      .then((booksIDS) => {this.setState({booksIDsShelved: booksIDS});});
+  }
   render() {
+    console.log(this.state.booksIDsShelved);
     return (
       <div className="app">
         <Route path='/search' render={() => (
-          <Search onUpdateRemoteShelf={this.updateRemoteShelf}/>
+          <Search onUpdateRemoteShelf={this.updateRemoteShelf} booksIDsShelved={this.state.booksIDsShelved}/>
         )}/>
         
         <Route exact path='/' render={() => (

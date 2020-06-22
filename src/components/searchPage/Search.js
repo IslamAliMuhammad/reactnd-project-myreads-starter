@@ -28,6 +28,7 @@ class Search extends Component{
     }
  
     render(){
+        const { onUpdateRemoteShelf, booksIDsShelved } = this.props;
         return(
             <div className="search-books">
             <div className="search-books-bar">
@@ -45,7 +46,7 @@ class Search extends Component{
   
               </div>
             </div>
-            <SearchResults books={this.state.books} onUpdateRemoteShelf={this.props.onUpdateRemoteShelf}/>
+            <SearchResults books={this.state.books} onUpdateRemoteShelf={onUpdateRemoteShelf} booksIDsShelved={booksIDsShelved}/>
           </div>
         );
     }
